@@ -1,111 +1,148 @@
 import Image from "next/image";
+import {
+  BellIcon,
+  CalendarIcon,
+  LayersIcon,
+  MixerHorizontalIcon,
+  StarIcon,
+  ChevronRightIcon,
+} from "@radix-ui/react-icons";
+import { SegmentedControl, Switch } from "@radix-ui/themes";
+import dynamic from "next/dynamic";
+import Tab from "@/components/tab";
+
+const DynamicChartShare = dynamic(() => import("@/components/chart-share"), {
+  ssr: false,
+});
+const DynamicChartInteraction = dynamic(
+  () => import("@/components/chart-interaction"),
+  {
+    ssr: false,
+  }
+);
+const DynamicChartTalkCount = dynamic(
+  () => import("@/components/chart-talk-count"),
+  {
+    ssr: false,
+  }
+);
+const DynamicChartTalkFrequency = dynamic(
+  () => import("@/components/chart-talk-frequency"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
+    <main className="relative overflow-x-hidden bg-[#f0f3fc] min-h-screen pb-10">
+      <div className="absolute left-0 right-0 h-80 bg-gradient-to-r from-[#078795] to-[#20b6b0] [mask-image:linear-gradient(black_65%,transparent_100%)]"></div>
+      <div className="relative z-10 max-w-screen-md mx-auto pt-12 px-5">
+        <div className="flex justify-between items-center">
+          <div className="flex">
+            <div className="w-12 h-12 rounded-full overflow-hidden border-4 border-white mr-2">
+              <Image
+                src="/images/avatar.jpg"
+                alt="avatar"
+                width={100}
+                height={100}
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div className="text-white">
+              <p className="text-xl">Hello, Dotothy</p>
+              <p className="text-sm">欢迎来到飞脑用户管理中心</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <button className="h-8 w-8 flex justify-center items-center rounded-md border-white border text-white bg-[#75cdce] hover:bg-[#70c5c6] active:bg-[#57a3a5]">
+              <CalendarIcon width={18} height={18} />
+            </button>
+            <button className="relative h-8 w-8 flex justify-center items-center rounded-md border-white border text-white bg-[#75cdce] hover:bg-[#70c5c6] active:bg-[#57a3a5]">
+              <BellIcon width={18} height={18} />
+              <div className="absolute h-3 w-3 -right-1.5 -top-1.5 rounded-full bg-red-500"></div>
+            </button>
+          </div>
+        </div>
+        <Tab />
+      </div>
+      <div className="relative z-10 max-w-screen-md mx-auto pt-4 px-5 grid grid-cols-[1fr_110px] grid-rows-10 gap-4">
+        <div className="bg-white p-2.5 rounded-xl row-span-6">
+          <div className="flex items-center mb-2">
+            <LayersIcon width={20} height={20} className="mr-1" />
+            <h3>BOT发言次数统计</h3>
+          </div>
+          <div className="flex flex-col">
+            <SegmentedControl.Root
+              defaultValue="week"
+              className="self-center mb-2"
+            >
+              <SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+              <SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+              <SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+            </SegmentedControl.Root>
+            <div className="w-full min-h-40" style={{ height: "360px" }}>
+              <DynamicChartTalkCount />
+            </div>
+          </div>
+        </div>
+        <div className="bg-white p-2.5 rounded-xl row-span-3">
+          <div className="flex items-center">
+            <MixerHorizontalIcon width={20} height={20} className="mr-1" />
+            <h3>控制面板</h3>
+          </div>
+          <div className="mt-1 text-sm">Chatter</div>
+          <Switch defaultChecked />
+          <div className="mt-2 text-sm">Summay</div>
+          <Switch defaultChecked />
+
+          <a href="#" className="block text-center text-sm text-slate-500 mt-1">
+            更多 &gt;
           </a>
         </div>
+
+        <div className="bg-white p-2.5 rounded-xl text-center row-span-7">
+          <div>
+            <DynamicChartShare />
+            <h5 className="text-sm font-semibold mb-1">分享总量</h5>
+            <p className="text-xs text-slate-500 mb-0.5">纯文本/图文类</p>
+            <p className="text-xs text-slate-500">26/28</p>
+          </div>
+          <div className="mt-2.5">
+            <DynamicChartInteraction />
+            <h5 className="text-sm font-semibold mb-1">交互统计</h5>
+            <p className="text-xs text-slate-500 mb-0.5">点赞/评论/分享</p>
+            <p className="text-xs text-slate-500">26/28/60</p>
+          </div>
+        </div>
+        <div className="bg-white p-2.5 rounded-xl row-span-4">
+          <div className="flex items-center mb-2">
+            <LayersIcon width={20} height={20} className="mr-1" />
+            <h3>BOT发言频段统计</h3>
+          </div>
+          <div className="flex flex-col">
+            <SegmentedControl.Root
+              defaultValue="day"
+              className="self-center mb-2"
+            >
+              <SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+              <SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+              <SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+            </SegmentedControl.Root>
+            <div className="w-full min-h-40" style={{ height: "200px" }}>
+              <DynamicChartTalkFrequency />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
+      <div className="max-w-screen-md mx-auto mt-4 px-5">
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#"
+          className="rounded-xl flex items-center p-2.5 text-lg bg-white active:bg-gray-200"
         >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
+          <StarIcon width={20} height={20} className="mr-1" />
+          用户使用手册
+          <ChevronRightIcon width={20} height={20} className="ml-auto" />
         </a>
       </div>
     </main>

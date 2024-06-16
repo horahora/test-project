@@ -9,7 +9,7 @@ export default function Tab() {
 
   return (
     <div>
-      <div className="flex justify-center gap-2.5 leading-8 mt-2 mb-4 *:px-10 *:rounded-full *:relative *:after:absolute *:after:top-full *:after:left-2/4 *:after:text-gray-600 *:after:border-b-[8px] *:after:border-l-[8px] *:after:border-r-[8px] *:after:border-[transparent] *:after:mt-2 *:after:-ml-2">
+      <div className="flex justify-center gap-2.5 text-nowrap leading-8 mt-2 mb-4 *:px-8 *:rounded-full *:relative *:after:absolute *:after:top-full *:after:left-2/4 *:after:text-gray-600 *:after:border-b-[8px] *:after:border-l-[8px] *:after:border-r-[8px] *:after:border-[transparent] *:after:mt-2 *:after:-ml-2">
         <button
           className={
             activeTab === 0
